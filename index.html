@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <title>Recharge Demo with Top & Bottom Ads</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #6a11cb, #2575fc);
+      padding: 20px;
+      color: white;
+      min-height: 100vh;
+      margin: 0;
+      text-align: center;
+    }
+    h2 {
+      color: #fffde7;
+      margin-bottom: 20px;
+    }
+    form, .comment-form {
+      background: rgba(255, 255, 255, 0.15);
+      max-width: 400px;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      margin: auto;
+      color: white;
+      text-align: left;
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+      font-size: 14px;
+    }
+    select, input[type="tel"], input[type="text"], textarea {
+      width: 100%;
+      padding: 6px 8px;
+      margin-top: 5px;
+      border-radius: 8px;
+      border: none;
+      box-sizing: border-box;
+      font-size: 13px;
+      resize: none;
+    }
+    textarea {
+      height: 40px;
+    }
+    button {
+      background-color: #25D366;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      margin-top: 15px;
+      width: 100%;
+      border-radius: 50px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      font-weight: bold;
+    }
+    button:hover {
+      background-color: #128C7E;
+    }
+    #message {
+      margin-top: 15px;
+      font-weight: bold;
+      color: #e6ffcc;
+      text-align: center;
+    }
+    #progressContainer {
+      width: 100%;
+      background-color: rgba(255,255,255,0.3);
+      border-radius: 30px;
+      margin-top: 25px;
+      height: 35px;
+      display: none;
+    }
+    #progressBar {
+      height: 100%;
+      width: 0%;
+      background-color: #25D366;
+      border-radius: 30px;
+      transition: width 0.3s ease;
+      position: relative;
+      color: black;
+      font-weight: bold;
+      line-height: 35px;
+      text-align: center;
+    }
+    .whatsapp-share {
+      margin-top: 20px;
+      text-align: center;
+      display: none;
+    }
+    .whatsapp-share a {
+      display: inline-block;
+      background: #25D366;
+      color: white;
+      padding: 12px 30px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: bold;
+      box-shadow: 0 2px 10px rgba(37, 211, 102, 0.6);
+      transition: background-color 0.3s ease;
+      font-size: 18px;
+    }
+    .whatsapp-share a:hover {
+      background-color: #128C7E;
+    }
+    #thankYouComment, #extraComment {
+      margin-top: 20px;
+      font-style: italic;
+      color: #d1ffd1;
+      display: none;
+      font-size: 16px;
+    }
+    #commentSection {
+      max-width: 400px;
+      margin: auto;
+      background: rgba(0, 0, 0, 0.25);
+      padding: 10px;
+      border-radius: 8px;
+      max-height: 220px;
+      overflow-y: auto;
+      color: white;
+      font-size: 14px;
+    }
+    #commentsList div {
+      margin-bottom: 12px;
+      padding: 10px;
+      background: rgba(37, 211, 102, 0.3);
+      border-radius: 8px;
+      position: relative;
+      color: white;
+      font-size: 13px;
+    }
+    #commentsList div p {
+      margin: 2px 0;
+    }
+    .gratitude p {
+      font-size: 11px;
+      color: #cceaca;
+      margin-top: 3px;
+    }
+    #adContainerTop, #adContainerBottom {
+      max-width: 320px;
+      height: 50px;
+      margin: 10px auto;
+      background: #000;
+      border-radius: 8px;
+      box-shadow: 0 0 12px rgba(0,0,0,0.7);
+    }
+  </style>
+</head>
+<body>
+  
+  <!-- Top Ad Container -->
+  <div id="adContainerTop">
+    <script type="text/javascript">
+      atOptions = {
+        'key' : 'c72d6356641f37ff5a27e9431004d546',
+        'format' : 'iframe',
+        'height' : 50,
+        'width' : 320,
+        'params' : {}
+      };
+    </script>
+    <script type="text/javascript" src="//usefulspeak.com/c72d6356641f37ff5a27e9431004d546/invoke.js"></script>
+  </div>
+  
+  <h2>Free Recharge Option</h2>
+  <form id="rechargeForm">
+    <label for="name">Apna Naam Dalein:</label>
+    <input type="text" id="name" name="name" required placeholder="Apka Naam" />
+
+    <label for="operator">Operator chunen:</label>
+    <select id="operator" name="operator" required>
+      <option value="">--Select Kare--</option>
+      <option value="Jio">Jio</option>
+      <option value="Vi">Vi</option>
+      <option value="Airtel">Airtel</option>
+      <option value="BSNL">BSNL</option>
+    </select>
+
+    <label for="phone">Phone Number dalein:</label>
+    <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" required placeholder="10-digit number" />
+    
+    <button type="submit">Recharge Kare</button>
+  </form>
+
+  <div id="progressContainer">
+    <div id="progressBar">0%</div>
+  </div>
+
+  <p id="message"></p>
+
+  <div class="whatsapp-share">
+    <a href="#" id="whatsappShareLink" target="_blank" rel="noopener">WhatsApp par Share kare</a>
+  </div>
+
+  <p id="thankYouComment">आपका रिचार्ज सफलतापूर्वक हो गया है, धन्यवाद।</p>
+  <p id="extraComment">आपके समर्थन के लिए दिल से धन्यवाद। हमारी सेवा पर आपका भरोसा हमारे लिए महत्वपूर्ण है।</p>
+
+  <!-- Bottom Ad Container -->
+  <div id="adContainerBottom">
+    <script type="text/javascript">
+      atOptions = {
+        'key' : 'c72d6356641f37ff5a27e9431004d546',
+        'format' : 'iframe',
+        'height' : 50,
+        'width' : 320,
+        'params' : {}
+      };
+    </script>
+    <script type="text/javascript" src="//usefulspeak.com/c72d6356641f37ff5a27e9431004d546/invoke.js"></script>
+  </div>
+
+  <div class="comment-form">
+    <label for="userComment">Comments likhen:</label>
+    <textarea id="userComment" placeholder="Apna comment yahan likhen"></textarea>
+    <button type="button" id="addCommentBtn">Comment Add Karein</button>
+  </div>
+
+  <div id="commentSection">
+    <h3>Comments:</h3>
+    <div id="commentsList"></div>
+  </div>
+
+  <script>
+    const form = document.getElementById('rechargeForm');
+    const messageP = document.getElementById('message');
+    const whatsappDiv = document.querySelector('.whatsapp-share');
+    const whatsappLink = document.getElementById('whatsappShareLink');
+    const progressContainer = document.getElementById('progressContainer');
+    const progressBar = document.getElementById('progressBar');
+    const thankYouComment = document.getElementById('thankYouComment');
+    const extraComment = document.getElementById('extraComment');
+    const addCommentBtn = document.getElementById('addCommentBtn');
+    const userComment = document.getElementById('userComment');
+    const commentsList = document.getElementById('commentsList');
+
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const name = document.getElementById('name').value.trim();
+      const operator = document.getElementById('operator').value;
+      const phone = document.getElementById('phone').value;
+
+      if (!(name && operator && phone)) {
+        messageP.textContent = "Please sabhi fields sahi bharen.";
+        whatsappDiv.style.display = 'none';
+        progressContainer.style.display = 'none';
+        thankYouComment.style.display = 'none';
+        extraComment.style.display = 'none';
+        return;
+      }
+
+      messageP.textContent = "";
+      whatsappDiv.style.display = 'none';
+      thankYouComment.style.display = 'none';
+      extraComment.style.display = 'none';
+      progressBar.style.width = '0%';
+      progressBar.textContent = '0%';
+      progressContainer.style.display = 'block';
+
+      let progress = 0;
+      const interval = setInterval(() => {
+        progress += 2;
+        progressBar.style.width = progress + '%';
+        progressBar.textContent = progress + '%';
+
+        if (progress >= 100) {
+          clearInterval(interval);
+          progressContainer.style.display = 'none';
+
+          messageP.textContent = `${name}, aapka recharge ${operator} ke liye number par ho gaya hai! (Demo)`;
+
+          const introText = "90 day recharge for Airtel, Vi, Jio, BSNL\n\n";
+          const dynamicText = `Maine recharge kiya hai.\nNaam: ${name}\nOperator: ${operator}\nMera recharge successful ho gaya hai!`;
+          const text = encodeURIComponent(introText + dynamicText);
+          const whatsappURL = `https://wa.me/?text=${text}`;
+
+          whatsappLink.href = whatsappURL;
+          whatsappDiv.style.display = 'block';
+
+          thankYouComment.style.display = 'block';
+          extraComment.style.display = 'block';
+        }
+      }, 100);
+
+    });
+
+    addCommentBtn.addEventListener('click', function() {
+      const commentText = userComment.value.trim();
+      if(commentText){
+        if(commentsList.children.length >= 6){
+          alert("Abhi adhik comments nahi add kar sakte.");
+          return;
+        }
+        const commentDiv = document.createElement('div');
+        commentDiv.style.marginBottom = '12px';
+        commentDiv.style.background = "rgba(37, 211, 102, 0.3)";
+        commentDiv.style.padding = "8px";
+        commentDiv.style.borderRadius = "8px";
+        commentDiv.style.position = "relative";
+        commentDiv.style.color = "white";
+        commentDiv.style.fontSize = "13px";
+
+        const userCommentP = document.createElement('p');
+        userCommentP.textContent = commentText;
+        commentDiv.appendChild(userCommentP);
+
+        const gratitudeDiv = document.createElement('div');
+        gratitudeDiv.style.fontSize = "11px";
+        gratitudeDiv.style.color = "#cceaca";
+        gratitudeDiv.style.marginTop = "4px";
+
+        const gratitudeTexts = [
+          "Thanks 👍",
+          "Mara recharge ho gya ✅",
+          "Bahut accha laga!",
+          "Phir se recharge karenge!",
+          "Service shandar hai!",
+          "Dhanyavaad!"
+        ];
+        for (const gText of gratitudeTexts) {
+          const gP = document.createElement('p');
+          gP.textContent = gText;
+          gratitudeDiv.appendChild(gP);
+        }
+        commentDiv.appendChild(gratitudeDiv);
+        commentsList.appendChild(commentDiv);
+        userComment.value = '';
+      }
+    });
+  </script>
+</body>
+</html>
+<script type="text/javascript">
+	atOptions = {
+		'key' : 'efd23841be5c178adc4ff1480778484e',
+		'format' : 'iframe',
+		'height' : 50,
+		'width' : 320,
+		'params' : {}
+	};
+</script>
+<script type="text/javascript" src="//www.highperformanceformat.com/efd23841be5c178adc4ff1480778484e/invoke.js"></script>
